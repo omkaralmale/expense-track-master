@@ -5,6 +5,7 @@ export const AuthContext = createContext({
   isLogIn: false,
   login: (token) => {},
   logout: () => {},
+  email: "",
 });
 
 const AuthContextProvider = (props) => {
@@ -49,6 +50,7 @@ const AuthContextProvider = (props) => {
         isLogIn: authState.isLogIn,
         login: loginHandler,
         logout: logoutHandler,
+        email: "",
       }}
     >
       {props.children}

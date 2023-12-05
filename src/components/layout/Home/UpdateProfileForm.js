@@ -1,11 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-
+import { AuthContext } from "../../../auth/Store/ContextAPI";
 const UpdateProfileForm = () => {
   const API_KEY = "AIzaSyBtmDXCvrD-2FXli9q45y819O4fB10sh1M";
   const url = useRef("");
   const gitName = useRef("");
+  const context = useContext(AuthContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -69,6 +70,7 @@ const UpdateProfileForm = () => {
       );
       if (response.ok) {
         const data = await response.json();
+        // console.log(data);
         if (data.users && data.users.length > 0) {
           const user = data.users[0];
           if (user.displayName) {
@@ -77,6 +79,8 @@ const UpdateProfileForm = () => {
           if (user.photoUrl) {
             url.current.value = user.photoUrl;
           }
+          localStorage.setItem("userEmail", user.email);
+          context.email = user.email;
         }
       } else {
         throw new Error(response);

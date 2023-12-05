@@ -7,6 +7,7 @@ import { AuthContext } from "../../auth/Store/ContextAPI";
 import { useNavigate } from "react-router-dom";
 
 const HeaderBar = () => {
+  const API_KEY = "AIzaSyBtmDXCvrD-2FXli9q45y819O4fB10sh1M";
   const history = useNavigate();
   const context = useContext(AuthContext);
   // console.log(AuthContext);
@@ -17,6 +18,34 @@ const HeaderBar = () => {
     context.logout();
     history("/login");
   };
+
+  const handleInfo = async () => {
+    const userEmail = localStorage.getItem("userEmail");
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${API_KEY}`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            requestType: "VERIFY_EMAIL",
+            idToken: token,
+          }),
+        }
+      );
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data);
+      }
+
+      const data = await response.json();
+      alert("Check your  Mail", data);
+      console.log(data);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary" fixed>
       <Container fluid>
@@ -36,6 +65,9 @@ const HeaderBar = () => {
             <Nav.Link href="/aboutUS">About US</Nav.Link>
             <Button variant="" onClick={handleLogOut}>
               LogOut
+            </Button>
+            <Button variant="" onClick={handleInfo}>
+              Verify Email
             </Button>
           </Nav>
         </Navbar.Collapse>
