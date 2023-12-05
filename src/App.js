@@ -6,6 +6,7 @@ import SignUpPage from "./auth/SignUpPage";
 import HeaderBar from "./components/layout/HeaderBar";
 import Home from "./components/layout/Home/Home";
 import UpdateProfile from "./components/layout/Home/UpdateProfile";
+import ForgotPassword from "./auth/ForgotPassword";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/update-profile" element={<UpdateProfile />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </Router>
   );

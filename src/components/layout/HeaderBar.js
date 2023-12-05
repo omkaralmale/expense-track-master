@@ -20,7 +20,7 @@ const HeaderBar = () => {
   };
 
   const handleInfo = async () => {
-    const userEmail = localStorage.getItem("userEmail");
+    // const userEmail = localStorage.getItem("userEmail");
     const token = localStorage.getItem("token");
     try {
       const response = await fetch(
@@ -40,7 +40,7 @@ const HeaderBar = () => {
 
       const data = await response.json();
       alert("Check your  Mail", data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       alert(error);
     }

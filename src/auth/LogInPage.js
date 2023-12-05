@@ -28,6 +28,9 @@ const LogInPage = () => {
             <br />
             <span> Don't have an Account ? </span>
             <Link to="/SignUp">SignUp</Link>
+            <br />
+            <span> Forgot your password </span>
+            <Link to="/forgot-password">Forgot Password</Link>
           </Card.Body>
         </Card>
       </div>
