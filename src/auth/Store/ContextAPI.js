@@ -33,6 +33,7 @@ const AuthContextProvider = (props) => {
   };
 
   const logoutHandler = () => {
+    // console.log("run");
     setAuthState({
       token: "",
       isLogIn: false,

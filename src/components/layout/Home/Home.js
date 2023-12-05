@@ -1,8 +1,8 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 
-function Home() {
+const Home = () => {
   return (
     <Card className="text-center">
       <Card.Header>Featured</Card.Header>
@@ -17,6 +17,6 @@ function Home() {
       </Card.Body>
     </Card>
   );
-}
+};
 
 export default Home;

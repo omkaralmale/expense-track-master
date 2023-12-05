@@ -2,11 +2,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import React, { useRef, useState, useContext } from "react";
 import { AuthContext } from "./Store/ContextAPI";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function LogInPageForm() {
+const LogInPageForm = () => {
   const context = useContext(AuthContext);
-  const history = useHistory();
+  const history = useNavigate();
   const [errorMSG, setMSG] = useState("");
   const email = useRef(null);
   const password = useRef(null);
@@ -40,7 +40,7 @@ function LogInPageForm() {
       // console.log(data.idToken);
       context.login(data.idToken);
       setMSG("");
-      history.push("/Home");
+      history("/Home");
     } catch (error) {
       alert(error.message);
       setMSG("Failed to log in");
@@ -66,6 +66,6 @@ function LogInPageForm() {
       </Button>
     </Form>
   );
-}
+};
 
 export default LogInPageForm;

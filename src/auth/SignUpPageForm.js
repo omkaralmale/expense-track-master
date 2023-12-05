@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import React, { useRef, useState } from "react";
 
-function SignUpPageForm() {
+const SignUpPageForm = () => {
   const [errorMSG, setMSG] = useState("");
   const email = useRef("");
   const password = useRef("");
@@ -72,6 +72,6 @@ function SignUpPageForm() {
       </Button>
     </Form>
   );
-}
+};
 
 export default SignUpPageForm;

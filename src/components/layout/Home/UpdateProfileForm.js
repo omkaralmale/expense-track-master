@@ -31,9 +31,8 @@ const UpdateProfileForm = () => {
           },
           body: JSON.stringify({
             idToken: token,
-            displayName: gitName.current.valueOf,
-            photoUrl: url.current.valueOf,
-            deleteAttribute: "DISPLAY_NAME",
+            displayName: gitName.current.value,
+            photoUrl: url.current.value,
             returnSecureToken: true,
           }),
         }
@@ -48,9 +47,11 @@ const UpdateProfileForm = () => {
       alert("Profile Updated:", data);
       // console.log(data);
     } catch (error) {
-      console.log("Error updating profile:", error);
+      // console.log("Error updating profile:", error);
       alert("Failed to update profile. Please try again.");
     }
+    gitName.current.value = null;
+    url.current.value = null;
   };
 
   return (
