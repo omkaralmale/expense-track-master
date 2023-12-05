@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 
@@ -50,9 +50,45 @@ const UpdateProfileForm = () => {
       // console.log("Error updating profile:", error);
       alert("Failed to update profile. Please try again.");
     }
-    gitName.current.value = null;
-    url.current.value = null;
   };
+
+  const getData = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${API_KEY}`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            idToken: token,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        if (data.users && data.users.length > 0) {
+          const user = data.users[0];
+          if (user.displayName) {
+            gitName.current.value = user.displayName;
+          }
+          if (user.photoUrl) {
+            url.current.value = user.photoUrl;
+          }
+        }
+      } else {
+        throw new Error(response);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getData(); // Fetch user data when the component mounts
+  }, []);
 
   return (
     <div
