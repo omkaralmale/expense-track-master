@@ -6,7 +6,7 @@ const ExpenseList = (props) => {
     <ol className="list-group">
       {props.Data.map((items, index) => (
         <ExpenseItems
-          key={index}
+          key={items.id}
           amount={items.amount}
           description={items.description}
           option={items.option}

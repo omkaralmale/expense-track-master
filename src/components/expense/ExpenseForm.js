@@ -7,15 +7,14 @@ const ExpensesForm = (props) => {
   const description = useRef("");
   const option = useRef("");
 
-  const handleSubmission = (event) => {
+  const handleSubmission = async (event) => {
     event.preventDefault();
     const obj = {
       amount: amount.current.value,
       description: description.current.value,
       option: option.current.value,
     };
-
-    props.onChange(obj);
+    props.onAddExpense(obj);
   };
 
   return (
