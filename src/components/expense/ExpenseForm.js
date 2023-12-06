@@ -43,6 +43,19 @@ const ExpensesForm = (props) => {
           <option>Salary</option>
           <option>Education</option>
           <option>Loan</option>
+          <option>Transportation</option>
+          <option>Utilities</option>
+          <option>Travel</option>
+          <option>Healthcare</option>
+          <option>Shopping</option>
+          <option>Insurance</option>
+          <option>Charity/Donations</option>
+          <option>Investments</option>
+          <option>Personal Care</option>
+          <option>Home Maintenance</option>
+          <option>Subscription Services</option>
+          <option>Gifts</option>
+          <option>Other</option>
         </Form.Select>
       </Form.Group>
 

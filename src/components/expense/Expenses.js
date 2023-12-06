@@ -52,6 +52,46 @@ const Expenses = () => {
     }
   };
 
+  const deleteExpenseHandler = async (id) => {
+    try {
+      const response = await fetch(
+        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/expenses/${id}.json`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message);
+      }
+      getData();
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const editExpenseHandler = async (id, updatedExpenseData) => {
+    try {
+      const response = await fetch(
+        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/expenses/${id}.json`,
+        {
+          method: "PATCH",
+          body: JSON.stringify(updatedExpenseData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message);
+      }
+      getData();
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <div className="container my-3">
       <div className="row justify-content-center">
@@ -61,7 +101,11 @@ const Expenses = () => {
       </div>
       <div className="row justify-content-center">
         <div className="col-md-6">
-          <ExpenseList Data={exps} />
+          <ExpenseList
+            Data={exps}
+            delete={deleteExpenseHandler}
+            edit={editExpenseHandler}
+          />
         </div>
       </div>
     </div>
