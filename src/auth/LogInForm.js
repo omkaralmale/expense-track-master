@@ -40,7 +40,7 @@ const LogInPageForm = () => {
       // console.log(data.idToken);
       context.login(data.idToken);
       setMSG("");
-      history("/Home");
+      history("/expenses");
     } catch (error) {
       alert(error.message);
       setMSG("Failed to log in");
