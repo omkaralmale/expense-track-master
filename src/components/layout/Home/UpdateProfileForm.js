@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useContext } from "react";
+import React, { useEffect, useRef } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { AuthContext } from "../../../auth/Store/ContextAPI";
+import { useDispatch } from "react-redux";
 const UpdateProfileForm = () => {
   const API_KEY = "AIzaSyBtmDXCvrD-2FXli9q45y819O4fB10sh1M";
   const url = useRef("");
   const gitName = useRef("");
-  const context = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -80,7 +80,7 @@ const UpdateProfileForm = () => {
             url.current.value = user.photoUrl;
           }
           localStorage.setItem("userEmail", user.email);
-          context.email = user.email;
+          dispatch(user.email);
         }
       } else {
         throw new Error(response);

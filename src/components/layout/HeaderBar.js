@@ -1,21 +1,20 @@
-import React, { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { AuthContext } from "../../auth/Store/ContextAPI";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { logout } from "../../STORE/Auth/AuthSlice";
 const HeaderBar = () => {
   const API_KEY = "AIzaSyBtmDXCvrD-2FXli9q45y819O4fB10sh1M";
   const history = useNavigate();
-  const context = useContext(AuthContext);
+  const dispatch = useDispatch();
   // console.log(AuthContext);
   // console.log(context);
   const handleLogOut = () => {
     // console.log(context);
     // console.log(context.logout);
-    context.logout();
+    dispatch(logout());
     history("/login");
   };
 
