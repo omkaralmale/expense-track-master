@@ -1,11 +1,12 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import React, { useRef, useState, useContext } from "react";
-import { AuthContext } from "./Store/ContextAPI";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../STORE/Auth/AuthSlice";
 
 const LogInPageForm = () => {
-  const context = useContext(AuthContext);
+  const dispatch = useDispatch();
   const history = useNavigate();
   const [errorMSG, setMSG] = useState("");
   const email = useRef(null);
@@ -38,7 +39,7 @@ const LogInPageForm = () => {
 
       const data = await response.json();
       // console.log(data.idToken);
-      context.login(data.idToken);
+      dispatch(login(data.idToken));
       setMSG("");
       history("/expenses");
     } catch (error) {

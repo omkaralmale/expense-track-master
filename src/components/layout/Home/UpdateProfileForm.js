@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useDispatch } from "react-redux";
+import { updateEmail } from "../../../STORE/updateProfile/UpdateProfile";
 const UpdateProfileForm = () => {
   const API_KEY = "AIzaSyBtmDXCvrD-2FXli9q45y819O4fB10sh1M";
   const url = useRef("");
@@ -80,7 +81,7 @@ const UpdateProfileForm = () => {
             url.current.value = user.photoUrl;
           }
           localStorage.setItem("userEmail", user.email);
-          dispatch(user.email);
+          dispatch(updateEmail(user.email));
         }
       } else {
         throw new Error(response);
