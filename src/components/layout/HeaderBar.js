@@ -2,10 +2,13 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../STORE/Auth/AuthSlice";
+import Darkatheme from "./Darkatheme";
+
 const HeaderBar = () => {
+  const pro = useSelector((state) => state.premium.pro);
   const API_KEY = "AIzaSyBtmDXCvrD-2FXli9q45y819O4fB10sh1M";
   const history = useNavigate();
   const dispatch = useDispatch();
@@ -70,6 +73,8 @@ const HeaderBar = () => {
             </Button>
           </Nav>
         </Navbar.Collapse>
+
+        {pro && <Darkatheme />}
       </Container>
     </Navbar>
   );

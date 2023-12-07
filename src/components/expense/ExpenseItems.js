@@ -104,7 +104,9 @@ const ExpenseItems = (props) => {
         <>
           <div>
             <div>
-              <strong>{props.description.toUpperCase()}</strong>
+              <strong style={{ color: "darkred" }}>
+                {props.description.toUpperCase()}
+              </strong>
               <div style={dateStyle}>{props.option.toLowerCase()}</div>
               <div style={dateStyle}>
                 {new Date().toLocaleDateString("en-GB")}

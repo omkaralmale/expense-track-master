@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ExpensesForm from "./ExpenseForm";
 import ExpenseList from "./ExpanseList";
+import { saveAs } from "file-saver";
+import Button from "react-bootstrap/Button";
+import { useSelector } from "react-redux";
 
 const Expenses = () => {
   const [exps, setEXPS] = useState([]);
-
+  const pro = useSelector((state) => state.premium.pro);
   const getData = useCallback(async () => {
     try {
       const response = await fetch(
@@ -91,11 +94,41 @@ const Expenses = () => {
       alert(error);
     }
   };
+  const convertToCSV = () => {
+    if (exps) {
+      const csvData = convertArrayToCSV(exps);
+      const blob = new Blob([csvData], { type: "text/csv;charset=utf-8" });
+      saveAs(blob, "api_data.csv");
+    }
+  };
+  const convertArrayToCSV = (dataArray) => {
+    console.log(dataArray);
+    const csvContent = dataArray
+      .map((row) => {
+        return `${row.description},${row.amount},${row.option}`;
+      })
+      .join("\n");
+
+    return csvContent;
+  };
+  const download = () => {
+    convertToCSV();
+  };
 
   return (
     <div className="container my-3">
       <div className="row justify-content-center">
         <div className="col-md-6">
+          {pro && (
+            <Button
+              onClick={download}
+              style={{ border: "2px solid grey", color: "grey" }}
+              variant="white"
+              className="mr-5"
+            >
+              Download PDF
+            </Button>
+          )}
           <ExpensesForm onAddExpense={addExpenseHandler} />
         </div>
       </div>

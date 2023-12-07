@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialPremiumState = { total: 0, end: 10000 };
+// const proLocal = localStorage.getItem("proLocal");
+const initialPremiumState = {
+  total: 0,
+  pro: false,
+  darkMode: false,
+};
 
 const premiumSlice = createSlice({
   name: "Premium",
@@ -9,8 +14,16 @@ const premiumSlice = createSlice({
     addTotal(state, actions) {
       state.total = +actions.payload;
     },
+    setPro(state) {
+      state.pro = true;
+      localStorage.setItem("proLocal", true);
+    },
+    setTheme(state) {
+      console.log("chnage");
+      state.darkMode = !state.darkMode;
+    },
   },
 });
 
-export const { addTotal } = premiumSlice.actions;
+export const { addTotal, setPro, setTheme } = premiumSlice.actions;
 export default premiumSlice.reducer;

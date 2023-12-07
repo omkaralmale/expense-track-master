@@ -6,7 +6,7 @@ const ExpenseList = (props) => {
   const dispatch = useDispatch();
   const total = props.Data.reduce((acc, sum) => acc + parseInt(sum.amount), 0);
   dispatch(addTotal(total));
-  console.log(total);
+
   return (
     <ol className="list-group">
       {props.Data.map((items, index) => (
