@@ -23,7 +23,7 @@ const App = () => {
         {isLogIn && (
           <Route path="/update-profile" element={<UpdateProfile />} />
         )}
-        {isLogIn && (
+        {!isLogIn && (
           <Route path="/forgot-password" element={<ForgotPassword />} />
         )}
       </Routes>

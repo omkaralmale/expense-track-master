@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const isLogInLocal = localStorage.getItem("isLogInLocal");
 const initialAuth = {
-  token: "",
-  isLogIn: false,
-  login: (token) => {},
-  logout: () => {},
+  token: localStorage.getItem("token") || "",
+  isLogIn: isLogInLocal ? parseInt(isLogInLocal, 10) === 1 : false,
   email: "",
 };
 
@@ -13,13 +12,12 @@ const authSlice = createSlice({
   initialState: initialAuth,
   reducers: {
     login(state, actions) {
-      console.log(actions);
       state.token = actions.payload;
       state.isLogIn = true;
       localStorage.setItem("token", actions.payload);
       localStorage.setItem("isLogInLocal", "1");
     },
-    logout(state, actions) {
+    logout(state) {
       state.token = "";
       state.isLogIn = false;
       localStorage.removeItem("token");
@@ -28,5 +26,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, logout, isLogIn } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 export default authSlice.reducer;

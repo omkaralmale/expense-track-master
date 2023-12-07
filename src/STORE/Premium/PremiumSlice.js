@@ -13,4 +13,4 @@ const premiumSlice = createSlice({
 });
 
 export const { addTotal } = premiumSlice.actions;
-export default premiumSlice.reducers;
+export default premiumSlice.reducer;

@@ -1,8 +1,10 @@
 import { useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useSelector } from "react-redux";
 
 const ExpensesForm = (props) => {
+  const BP = useSelector((state) => state.premium.total);
   const amount = useRef(0);
   const description = useRef("");
   const option = useRef("");
@@ -59,9 +61,15 @@ const ExpensesForm = (props) => {
         </Form.Select>
       </Form.Group>
 
-      <Button variant="danger" type="submit">
+      <Button variant="danger" type="submit" disabled={BP > 10000}>
         Add Expense
       </Button>
+      <span
+        style={{ border: "2px solid red", margin: "10px", padding: "10px" }}
+        hidden={!(BP > 10000)}
+      >
+        BUY PREMIUM
+      </span>
     </Form>
   );
 };

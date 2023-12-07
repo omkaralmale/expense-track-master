@@ -13,4 +13,4 @@ const UpdateSlice = createSlice({
 });
 
 export const { updateEmail } = UpdateSlice.actions;
-export default UpdateSlice.reducers;
+export default UpdateSlice.reducer;
