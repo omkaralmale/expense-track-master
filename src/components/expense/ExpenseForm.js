@@ -25,8 +25,9 @@ const ExpensesForm = (props) => {
 
   const handleBuy = async () => {
     try {
+      dispatch(setPro(true));
       const response = await fetch(
-        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/${user}/pro`,
+        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/${user}/pro.json`,
         {
           method: "POST",
           body: JSON.stringify({ isPro: true }),
@@ -42,11 +43,9 @@ const ExpensesForm = (props) => {
     } catch (error) {
       alert(error);
     }
-    dispatch(setPro(true));
   };
-  useEffect(() => {
-    handleBuy();
-  }, []);
+  useEffect(() => {}, []);
+  console.log(total > 10000);
   console.log(pro);
   return (
     <Form
@@ -91,7 +90,7 @@ const ExpensesForm = (props) => {
         Add Expense
       </Button>
 
-      {!(total > 10000 && !pro) && (
+      {total > 10000 && !pro && (
         <div>
           <div
             onClick={handleBuy}

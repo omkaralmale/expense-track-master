@@ -18,11 +18,19 @@ const Expenses = () => {
         `https://expense-tracker-7260d-default-rtdb.firebaseio.com/${user}/expenses.json`
       );
       const isProData = await fetch(
-        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/${user}/pro`
+        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/${user}/pro.json`
       );
+      // console.log(isProData);
       const isPro = await isProData.json();
-      for (const key in isPro) {
-        dispatch(setPro(isPro[key].isPro === true ? true : false));
+      console.log(isPro);
+      if (isPro == null) {
+        dispatch(setPro(false));
+      } else {
+        console.log("set");
+        for (const key in isPro) {
+          dispatch(setPro(true));
+          console.log(isPro[key].isPro);
+        }
       }
       const data = await response.json();
       // console.log(data);
@@ -39,7 +47,7 @@ const Expenses = () => {
     } catch (error) {
       alert(error);
     }
-  }, []);
+  }, [pro]);
 
   useEffect(() => {
     getData();

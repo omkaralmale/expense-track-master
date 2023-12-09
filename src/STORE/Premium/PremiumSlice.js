@@ -13,8 +13,8 @@ const premiumSlice = createSlice({
     addTotal(state, actions) {
       state.total = +actions.payload;
     },
-    setPro(state) {
-      state.pro = true;
+    setPro(state, actions) {
+      state.pro = actions.payload;
     },
     setTheme(state) {
       state.darkMode = !state.darkMode;

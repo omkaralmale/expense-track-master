@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ExpenseItems from "./ExpenseItems";
 import { useDispatch } from "react-redux";
 import { addTotal } from "../../STORE/Premium/PremiumSlice";
@@ -8,7 +8,9 @@ const ExpenseList = (props) => {
     (acc, item) => acc + parseInt(item.amount),
     0
   );
-  dispatch(addTotal(total));
+  useEffect(() => {
+    dispatch(addTotal(total));
+  }, [total]);
 
   return (
     <ol className="list-group">
