@@ -1,11 +1,12 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useSelector, useDispatch } from "react-redux";
 import { setPro } from "../../STORE/Premium/PremiumSlice";
 const ExpensesForm = (props) => {
+  const user = localStorage.getItem("user").replace(".", "").replace("@", "");
   const dispatch = useDispatch();
-  const BP = useSelector((state) => state.premium.total);
+  const total = useSelector((state) => state.premium.total);
   const pro = useSelector((state) => state.premium.pro);
   const amount = useRef(0);
   const description = useRef("");
@@ -22,10 +23,31 @@ const ExpensesForm = (props) => {
     props.onAddExpense(obj);
   };
 
-  const handleBuy = () => {
-    dispatch(setPro());
+  const handleBuy = async () => {
+    try {
+      const response = await fetch(
+        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/${user}/pro`,
+        {
+          method: "POST",
+          body: JSON.stringify({ isPro: true }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      alert(error);
+    }
+    dispatch(setPro(true));
   };
-
+  useEffect(() => {
+    handleBuy();
+  }, []);
+  console.log(pro);
   return (
     <Form
       onSubmit={handleSubmission}
@@ -40,11 +62,9 @@ const ExpensesForm = (props) => {
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Control ref={amount} type="number" placeholder="Enter Amount" />
       </Form.Group>
-
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Control ref={description} type="text" placeholder="Description" />
       </Form.Group>
-
       <Form.Group className="mb-3">
         <Form.Select ref={option}>
           <option>Food</option>
@@ -67,30 +87,32 @@ const ExpensesForm = (props) => {
           <option>Other</option>
         </Form.Select>
       </Form.Group>
-
-      <Button variant="danger" type="submit" disabled={BP > 10000 && !pro}>
+      <Button variant="danger" type="submit" disabled={total > 10000 && !pro}>
         Add Expense
       </Button>
-      <div hidden={!(BP > 10000 && !pro)}>
-        <div
-          onClick={handleBuy}
-          style={{
-            border: "2px solid gold",
-            margin: "10px",
-            padding: "10px",
-            textAlign: "center",
-            background: "gold",
-          }}
-        >
-          BUY PREMIUM
+
+      {!(total > 10000 && !pro) && (
+        <div>
+          <div
+            onClick={handleBuy}
+            style={{
+              border: "2px solid gold",
+              margin: "10px",
+              padding: "10px",
+              textAlign: "center",
+              background: "gold",
+            }}
+          >
+            BUY PREMIUM
+          </div>
+          <p>
+            To ensure uninterrupted access to premium features, strive to stay
+            within the 10,000 limit ⏳. When nearing this threshold, consider a
+            premium subscription for advanced tools 🚀 to track expenses and
+            manage finances more effectively.
+          </p>
         </div>
-        <p>
-          To ensure uninterrupted access to premium features, strive to stay
-          within the 10,000 limit ⏳. When nearing this threshold, consider a
-          premium subscription for advanced tools 🚀 to track expenses and
-          manage finances more effectively.
-        </p>
-      </div>
+      )}
     </Form>
   );
 };

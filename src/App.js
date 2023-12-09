@@ -14,14 +14,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 const lightTheme = createTheme({
   palette: {
     mode: "light",
-    // other light mode theme configurations
   },
 });
 
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
-    // other dark mode theme configurations
   },
 });
 

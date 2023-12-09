@@ -3,17 +3,29 @@ import ExpensesForm from "./ExpenseForm";
 import ExpenseList from "./ExpanseList";
 import { saveAs } from "file-saver";
 import Button from "react-bootstrap/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setPro } from "../../STORE/Premium/PremiumSlice";
 
 const Expenses = () => {
+  const dispatch = useDispatch();
+
+  const user = localStorage.getItem("user").replace(".", "").replace("@", "");
   const [exps, setEXPS] = useState([]);
   const pro = useSelector((state) => state.premium.pro);
   const getData = useCallback(async () => {
     try {
       const response = await fetch(
-        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/expenses.json`
+        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/${user}/expenses.json`
       );
+      const isProData = await fetch(
+        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/${user}/pro`
+      );
+      const isPro = await isProData.json();
+      for (const key in isPro) {
+        dispatch(setPro(isPro[key].isPro === true ? true : false));
+      }
       const data = await response.json();
+      // console.log(data);
       const loadedExpense = [];
       for (const key in data) {
         loadedExpense.push({
@@ -34,9 +46,10 @@ const Expenses = () => {
   }, [getData]);
 
   const addExpenseHandler = async (expenseData) => {
+    console.log(user);
     try {
       const response = await fetch(
-        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/expenses.json`,
+        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/${user}/expenses.json`,
         {
           method: "POST",
           body: JSON.stringify(expenseData),
@@ -58,7 +71,7 @@ const Expenses = () => {
   const deleteExpenseHandler = async (id) => {
     try {
       const response = await fetch(
-        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/expenses/${id}.json`,
+        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/${user}/expenses/${id}.json`,
         {
           method: "DELETE",
         }
@@ -76,7 +89,7 @@ const Expenses = () => {
   const editExpenseHandler = async (id, updatedExpenseData) => {
     try {
       const response = await fetch(
-        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/expenses/${id}.json`,
+        `https://expense-tracker-7260d-default-rtdb.firebaseio.com/${user}/expenses/${id}.json`,
         {
           method: "PATCH",
           body: JSON.stringify(updatedExpenseData),
@@ -102,7 +115,7 @@ const Expenses = () => {
     }
   };
   const convertArrayToCSV = (dataArray) => {
-    console.log(dataArray);
+    // console.log(dataArray);
     const csvContent = dataArray
       .map((row) => {
         return `${row.description},${row.amount},${row.option}`;

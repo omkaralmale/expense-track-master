@@ -40,6 +40,8 @@ const LogInPageForm = () => {
       const data = await response.json();
       // console.log(data.idToken);
       dispatch(login(data.idToken));
+      console.log(data.email);
+      localStorage.setItem("user", data.email);
       setMSG("");
       history("/expenses");
     } catch (error) {

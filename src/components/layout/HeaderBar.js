@@ -18,6 +18,8 @@ const HeaderBar = () => {
     // console.log(context);
     // console.log(context.logout);
     dispatch(logout());
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("proLocal");
     history("/login");
   };
 
